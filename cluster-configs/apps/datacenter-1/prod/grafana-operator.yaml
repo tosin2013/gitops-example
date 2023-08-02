@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana-operator
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: open-cluster-management
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: grafana-operator/overlays/user-app
+    repoURL: https://github.com/example/gitops-example.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
